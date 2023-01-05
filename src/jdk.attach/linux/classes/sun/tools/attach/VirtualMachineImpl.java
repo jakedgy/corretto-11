@@ -285,15 +285,10 @@ public class VirtualMachineImpl extends HotSpotVirtualMachine {
         try {
             f.createNewFile();
         } catch (IOException x) {
-            String root;
-            if (pid != ns_pid) {
-                // A process may not exist in the same mount namespace as the caller.
-                // Instead, attach relative to the target root filesystem as exposed by
-                // procfs regardless of namespaces.
-                root = "/proc/" + pid + "/root/" + tmpdir;
-            } else {
-                root = tmpdir;
-            }
+            // A process may not exist in the same mount namespace as the caller.
+            // Instead, attach relative to the target root filesystem as exposed by
+            // procfs regardless of namespaces.
+            String root = "/proc/" + pid + "/root/" + tmpdir;
             f = new File(root, fn);
             f.createNewFile();
         }
